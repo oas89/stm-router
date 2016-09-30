@@ -1,0 +1,19 @@
+{
+  "name": "stm-router",
+  "version": "1.0.0",
+  "description": "Tools to create single-page sites routed by History API, including two-column layout",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SmartTeleMax/stm-router.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SmartTeleMax/stm-router/issues"
+  },
+  "homepage": "https://github.com/SmartTeleMax/stm-router#readme"
+}
