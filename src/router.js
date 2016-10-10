@@ -1,6 +1,6 @@
 /*jslint
     esversion: 6, -W097, browser: true */
-/* globals jQuery: true, $: true, console */
+/* globals console */
 
 'use strict';
 
