@@ -119,8 +119,9 @@ export class Router{
         //console.debug('[Router]#start');
         if (!history.state) {
             let state = {};
-            for (let viewName of urlViews) {
-                let view = this.viewManager.getView(viewName);
+            for (let idx = urlViews.length; idx--;) {
+                let viewName = urlViews[idx],
+                    view = this.viewManager.getView(viewName);
                 if (view !== undefined) {
                     state[viewName] = view.currentURL;
                 }
