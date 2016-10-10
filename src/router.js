@@ -1,6 +1,5 @@
-/*jslint
-    esversion: 6, -W097, browser: true */
-/* globals console */
+/*jslint esversion: 6, -W097, browser: true */
+/* globals console, require */
 
 'use strict';
 

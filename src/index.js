@@ -1,3 +1,5 @@
+/*jslint esversion: 6, -W097, browser: true */
+
 import {View as _View} from "./view";
 import {Router as _Router} from "./router";
 
