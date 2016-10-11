@@ -1,6 +1,6 @@
 {
   "name": "stm-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tools to create single-page sites routed by History API, including two-column layout",
   "main": "lib/index.js",
   "scripts": {

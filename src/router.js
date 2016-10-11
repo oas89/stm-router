@@ -118,11 +118,18 @@ export class Router{
     start() {
         //console.debug('[Router]#start');
         if (!history.state) {
-            var state = {
-                contentView: this.viewManager.getView('contentView').currentURL,
-                readerView: this.viewManager.getView('readerView').currentURL
-            };
-            var url = $.url().attr('relative');
+            let state = {},
+                views = this.viewManager.views;
+            for (let idx = views.length; idx--;) {
+                let view = views[idx],
+                    viewName = view.constructor.name,
+                    url = view.currentURL;
+
+                if (!!url) {
+                    state[viewName] = url;
+                }
+            }
+            let url = $.url().attr('relative');
             this.updateState(state, url, document.title);
         }
         this._route($.url().attr('relative'), $('html').html(), {from: 'initial'});
