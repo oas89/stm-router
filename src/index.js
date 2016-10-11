@@ -1,7 +1,9 @@
 /*jslint esversion: 6, -W097, browser: true */
 
-import {View as _View} from "./view";
-import {Router as _Router} from "./router";
+import _View from "./view";
+import _Router from "./router";
+import _ViewManager from "./view-manager";
 
 export var View = _View;
 export var Router = _Router;
+export var ViewManager = _ViewManager;

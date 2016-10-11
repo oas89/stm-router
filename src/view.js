@@ -18,7 +18,7 @@ var $ = require('jquery');
  * @param {Function} options.onInit Method to be called on View init, so you can tune the view.
  * @param {Function} options.isEmpty Hacky way to replace .isEmpty() method (since it required sometimes)
  */
-export class View{
+class View{
   constructor(options) {
       this.currentURL = options.url;
       if (options.onRender) {
@@ -286,3 +286,6 @@ export class View{
       }
   }
 }
+
+export default View;
+

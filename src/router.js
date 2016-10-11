@@ -33,7 +33,7 @@ var $ = require('jquery');
  * `from`, `shouldNavigate` and `state` (for future uses) arguments.
  * @see handlerCallback documentation for details.
  */
-export class Router{
+class Router{
     constructor(options) {
         this.options = options || {};
         this.handlers = [];
@@ -407,4 +407,6 @@ export class Router{
         form.submit();
     }
 }
+
+export default Router;
 
