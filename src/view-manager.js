@@ -266,6 +266,9 @@ class ViewManager{
         var path = el.getAttribute('href');
         if (path == '#') { return; }
 
+        var customHandling = this.onClickHook(el, path);
+        if (customHandling === true) { return; }
+
         // XXX should this be in lib or in application?
         var options = {};
         var view = this.elementToView(el);
@@ -286,6 +289,9 @@ class ViewManager{
         }
 
         this.router.handleURL(path, options);
+    }
+
+    onClickHook(el, path) {
     }
 
     elementToView(el) {
