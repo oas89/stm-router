@@ -115,15 +115,18 @@ export class Router{
         this.initialPop = false;
     }
 
-    start(urlViews=['contentView', 'readerView']) {
+    start() {
         //console.debug('[Router]#start');
         if (!history.state) {
-            let state = {};
-            for (let idx = urlViews.length; idx--;) {
-                let viewName = urlViews[idx],
-                    view = this.viewManager.getView(viewName);
-                if (view !== undefined) {
-                    state[viewName] = view.currentURL;
+            let state = {},
+                views = this.viewManager.views;
+            for (let idx = views.length; idx--;) {
+                let view = views[idx],
+                    viewName = view.constructor.name,
+                    url = view.currentURL;
+
+                if (!!url) {
+                    state[viewName] = url;
                 }
             }
             let url = $.url().attr('relative');
