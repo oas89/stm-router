@@ -248,6 +248,10 @@ class ViewManager{
         return false;
     }
 
+    printPage(el) {
+        window.print();
+    }
+
     onClick(e) {
         var el = e.target;
         while (el && 'A' !== el.nodeName) { el = el.parentNode; }
@@ -259,7 +263,7 @@ class ViewManager{
         e.stopPropagation();
 
         if (this.isPrintLink(el)) {
-            window.print();
+            this.printPage(el);
             return;
         }
 
