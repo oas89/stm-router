@@ -33,7 +33,7 @@ var $ = require('jquery');
  * `from`, `shouldNavigate` and `state` (for future uses) arguments.
  * @see handlerCallback documentation for details.
  */
-class Router{
+export class Router{
     constructor(options) {
         this.options = options || {};
         this.handlers = [];
@@ -158,11 +158,26 @@ class Router{
     }
 
     /**
+     * Remove multiple slashes in url path
+     */
+    _normalizeUrl(url) {
+      let [path, query] = url.split('?');
+      path = path.replace(/\/+/g, '/');
+      if (query) {
+          url = [path, query].join('?');
+      } else {
+          url = path;
+      }
+      return url
+    }
+
+
+    /**
      * Proxy for history.replaceState.
      * XXX: Bad naming.
      */
     updateState(state, url, title) {
-        url = url.replace(/\/+/g, '/');
+        url = this._normalizeUrl(url);
         console.log('[Router]: replaceState', url, state);
         if ('replaceState' in window.history) {
             state.uid = history.uid;
@@ -222,7 +237,7 @@ class Router{
 
         // We should stop previous loading if new request accepted
         if (this._xhr) {
-            if (options.state && 
+            if (options.state &&
                 options.state.contentView == this._xhr.url &&
                 options.state.readerView == url) {
                 //  _load is called for both contentView and readerView!
@@ -407,6 +422,3 @@ class Router{
         form.submit();
     }
 }
-
-export default Router;
-
