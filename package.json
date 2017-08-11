@@ -21,7 +21,8 @@
   "homepage": "https://github.com/SmartTeleMax/stm-router#readme",
   "dependencies": {
     "core-js": "^2.4.1",
-    "jquery": ">= 1.11.0"
+    "jquery": ">= 1.11.0",
+    "urijs": "^1.18.11"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",

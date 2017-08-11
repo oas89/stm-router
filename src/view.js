@@ -3,7 +3,7 @@
 
 'use strict';
 
-var $ = require('jquery');
+import $ from 'jquery';
 
 /**
  * Initialize View class. To start work, view have to be attached to DOM with .attachToDOM()
@@ -18,7 +18,7 @@ var $ = require('jquery');
  * @param {Function} options.onInit Method to be called on View init, so you can tune the view.
  * @param {Function} options.isEmpty Hacky way to replace .isEmpty() method (since it required sometimes)
  */
-class View{
+export class View{
   constructor(options) {
       this.currentURL = options.url;
       if (options.onRender) {
@@ -286,6 +286,3 @@ class View{
       }
   }
 }
-
-export default View;
-

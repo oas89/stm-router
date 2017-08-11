@@ -3,10 +3,10 @@
 
 'use strict';
 
-var $ = require("jquery");
+import $ from 'jquery';
 
 
-class ViewManager{
+export class ViewManager{
     constructor(router, options) {
         if (ViewManager._singleton !== undefined) {
             throw "ViewManager can be initialized only once per page";
@@ -315,6 +315,3 @@ class ViewManager{
     }
 
 }
-
-export default ViewManager;
-

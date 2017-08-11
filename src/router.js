@@ -3,8 +3,8 @@
 
 'use strict';
 
-require('core-js/es5');
-var $ = require('jquery');
+import 'core-js/es5';
+import $ from 'jquery';
 
 /**
  * handlerCallback is  a callback that run when handler is picked up and XHR finished
