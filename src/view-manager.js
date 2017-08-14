@@ -4,6 +4,7 @@
 'use strict';
 
 import $ from 'jquery';
+import {getRelativeUrl, getHostname} from './util';
 
 
 export class ViewManager{
@@ -80,8 +81,9 @@ export class ViewManager{
     }
 
     onHashChange() {
-        var state = this.getUrlState();
-        this.router.updateState(state, $.url().attr('relative'), document.title);
+        let state = this.getUrlState();
+        let url = getRelativeUrl();
+        this.router.updateState(state, url, document.title);
     }
 
     getActiveView() {
@@ -153,12 +155,7 @@ export class ViewManager{
         if (domains) {
             domains = '|' + domains.replace(/\./g, '\\.');
         }
-
-        var domainRe = new RegExp('^(?:[\\w-\\.]+\\.)?(' +
-                                $.url().attr('host') + domains +
-                                ')$');
-        //if (/^(?:http|https|ftp):\/\//.test(href) && ! domainRe.test(href))
-
+        var domainRe = new RegExp('^(?:[\\w-\\.]+\\.)?(' + host + domains + ')$');
         return domainRe.test(host);
     }
 
@@ -167,12 +164,6 @@ export class ViewManager{
      * resource" warning or not.
      */
     isLinkExternal(element) {
-        var $currentUrl = $.url(),
-            hostName = $currentUrl.attr('host'),
-            path = $currentUrl.attr('path'),
-            $url = $.url(element.href),
-            urlHash = $url.attr('relative').split('#')[1];
-
         if (!element.href || $(element).hasClass('no-warning')) {
             return false;
         }
@@ -185,17 +176,17 @@ export class ViewManager{
 
         if (element.rel && (
             element.rel === 'alternate' ||
-                element.rel === 'contact')) {
+            element.rel === 'contact')) {
             return false;
         }
 
         if (element.rel && (
             element.rel === 'external' ||
-                element.rel === 'license')) {
+            element.rel === 'license')) {
             return true;
         }
 
-        return !this.isInternalHost($url.attr('host'));
+        return !this.isInternalHost(getHostname());
     }
 
 
@@ -218,8 +209,7 @@ export class ViewManager{
         }
 
         // Do not handle files.
-        var $url = $.url(element.href);
-        if ($url.attr('file')) {
+        if (element.href.indexOf('file:') === 0) {
             return false;
         }
 
@@ -228,8 +218,7 @@ export class ViewManager{
             return false;
         }
 
-        var $currentUrl = $.url();
-        return $url.attr('host') === $currentUrl.attr('host');
+        return getHostname(element.href) === getHostname();
     }
 
     shouldHandleClick(e, el) {
@@ -314,4 +303,6 @@ export class ViewManager{
         return this.getView(this.urlViews[0]);
     }
 
+    onRoute(url, data, from, state, options) {
+    };
 }

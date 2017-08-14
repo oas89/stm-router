@@ -4,6 +4,7 @@
 'use strict';
 
 import $ from 'jquery';
+import {getRelativeUrl} from './util';
 
 /**
  * Initialize View class. To start work, view have to be attached to DOM with .attachToDOM()
@@ -60,14 +61,10 @@ export class View{
       this.$element = $(element ? element : this.element);
       this.$container = $(container ? container : this.container);
       if (!this.isEmpty() && !this.currentURL) {
-          var $url = $.url(window.location.href);
-          var fragment = $url.attr('fragment');
-          var query = $url.attr('query');
           // Since we do not need HASH in view URL state.
           // XXX what does this comment mean? We do NOT need it, but we add
           //     it?
-          this.currentURL = $url.attr('path') + (query ? '?' + query : '') +
-                                                (fragment ? '#' + fragment : '');
+          this.currentURL = getRelativeUrl();
       }
       if (this.bindEvents && typeof this.bindEvents === 'function') {
           this.bindEvents();
@@ -175,7 +172,6 @@ export class View{
    * @param {String} data Data to be pasted into View container.
    */
   render(data) {
-      //console.debug('[View]:#render');
       var $data = $($.parseHTML(data));
       var $selector = $data.find(this.$element.selector);
       if (!$selector.length) {
@@ -285,4 +281,12 @@ export class View{
           );
       }
   }
+
+    reloadIsRequired(url, options) {
+        return true;
+    }
+
+    onRoute(url, data, from, state, options) {
+        this.update(data, url);
+    }
 }

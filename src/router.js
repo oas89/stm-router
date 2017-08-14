@@ -5,6 +5,7 @@
 
 import 'core-js/es5';
 import $ from 'jquery';
+import {getRelativeUrl, normalizeUrl} from './util';
 
 /**
  * handlerCallback is  a callback that run when handler is picked up and XHR finished
@@ -105,10 +106,7 @@ export class Router{
             if (state.contentView && state.readerView) {
                 this._load(state.contentView, {shouldNavigate: false, from: 'popstate', state: state});
             }
-            // $.url().attr('relative') returns unicode, which is misinterpreted by IE11.
-            // Don't use it.
-            var l = window.location;
-            var url = l.pathname + l.search + l.hash;
+            let url = getRelativeUrl();
             this._load(url, {shouldNavigate: false, from: 'popstate', state: state});
         }
 
@@ -116,7 +114,7 @@ export class Router{
     }
 
     start() {
-        //console.debug('[Router]#start');
+        let currentUrl = getRelativeUrl();
         if (!history.state) {
             let state = {},
                 views = this.viewManager.views;
@@ -129,10 +127,9 @@ export class Router{
                     state[viewName] = url;
                 }
             }
-            let url = $.url().attr('relative');
-            this.updateState(state, url, document.title);
+            this.updateState(state, currentUrl, document.title);
         }
-        this._route($.url().attr('relative'), $('html').html(), {from: 'initial'});
+        this._route(currentUrl, $('html').html(), {from: 'initial'});
     }
 
     /**
@@ -158,26 +155,11 @@ export class Router{
     }
 
     /**
-     * Remove multiple slashes in url path
-     */
-    _normalizeUrl(url) {
-      let [path, query] = url.split('?');
-      path = path.replace(/\/+/g, '/');
-      if (query) {
-          url = [path, query].join('?');
-      } else {
-          url = path;
-      }
-      return url
-    }
-
-
-    /**
      * Proxy for history.replaceState.
      * XXX: Bad naming.
      */
     updateState(state, url, title) {
-        url = this._normalizeUrl(url);
+        url = normalizeUrl(url);
         console.log('[Router]: replaceState', url, state);
         if ('replaceState' in window.history) {
             state.uid = history.uid;
@@ -211,18 +193,12 @@ export class Router{
         }
     }
 
-    //_urlServerPart(url) {
-    //    if (typeof url === 'string') { url = $.url(url) };
-    //    return url.attr('relative').split('#')[0];
-    //}
-
     /**
      * Create and trigger XHR request for passed URL.
      * @param {String} url
      * @param {Object} options
      */
     _load(url, options) {
-        //var url = $.url(url).attr('relative');
         var view = this.viewManager.urlToView(url);
         //console.log('[Router] route to view', view, 'url', url);
 
