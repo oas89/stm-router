@@ -182,6 +182,7 @@ export class ViewManager{
 
         if (element.rel && (
             element.rel === 'external' ||
+            element.rel === 'noopener' ||
             element.rel === 'license')) {
             return true;
         }
